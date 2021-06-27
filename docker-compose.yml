@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  primary:
+    image: mysql:5.7.16
+    container_name: primary_mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./docker/volumes/mysql/primary/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql/conf.d:/etc/mysql/conf.d
+      - ./docker/volumes/mysql/primary/data:/var/lib/mysql
+    ports:
+      - 4306:3306
+
+  secondary:
+    image: mysql:5.7.16
+    container_name: secondry_mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./docker/volumes/mysql/secondary/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql/conf.d:/etc/mysql/conf.d
+      - ./docker/volumes/mysql/secondary/data:/var/lib/mysql
+    ports:
+      - 5306:3306

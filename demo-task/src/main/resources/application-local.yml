@@ -1,0 +1,34 @@
+app:
+  datasource:
+    primary:
+      jdbc-url: jdbc:mysql://localhost:4306/primary_mysql
+      username: root
+      password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-timeout: 100000
+      maximum-pool-size: 5
+      minimum-idle: 4
+      pool-name: primary-hikari
+    secondary:
+      jdbc-url: jdbc:mysql://localhost:5306/secondary_mysql
+      username: root
+      password:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connection-timeout: 90000
+      maximum-pool-size: 3
+      minimum-idle: 2
+      pool-name: secondary-hikari
+
+    mybatis:
+      primary:
+        map-underscore-to-camel-case: true
+        default-statement-timeout: 10
+      secondary:
+        map-underscore-to-camel-case: true
+        default-statement-timeout: 3
+
+  async:
+    core-pool-size: 10
+    max-pool-size: 20
+    queue-capacity: 500
+    thread-name-prefix: demo-job
