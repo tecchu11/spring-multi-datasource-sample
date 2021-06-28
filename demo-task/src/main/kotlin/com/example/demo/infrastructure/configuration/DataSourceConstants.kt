@@ -1,5 +1,7 @@
 package com.example.demo.infrastructure.configuration
 
+typealias MybatisConfig = org.apache.ibatis.session.Configuration
+
 object DataSourceConstants {
     // primary mybatis
     internal const val PRIMARY_SESSION_TEMPLATE = "primarySqlSessionTemplate"

@@ -22,15 +22,15 @@ class PrimaryMybatisConfig {
     @Primary
     @Bean
     @ConfigurationProperties("app.mybatis.primary")
-    fun configuration(): org.apache.ibatis.session.Configuration {
-        return org.apache.ibatis.session.Configuration()
+    fun configuration(): MybatisConfig {
+        return MybatisConfig()
     }
 
     @Primary
     @Bean(DataSourceConstants.PRIMARY_SESSION_FACTORY)
     fun sqlSessionFactory(
         dataSource: DataSource,
-        configuration: org.apache.ibatis.session.Configuration
+        configuration: MybatisConfig
     ): SqlSessionFactory? {
         val factoryBean = SqlSessionFactoryBean()
         factoryBean.setDataSource(dataSource)

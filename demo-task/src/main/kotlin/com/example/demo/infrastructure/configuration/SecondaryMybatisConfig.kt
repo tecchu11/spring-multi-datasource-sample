@@ -21,14 +21,14 @@ class SecondaryMybatisConfig {
 
     @Bean(DataSourceConstants.SECONDARY_MYBATIS_CONFIG)
     @ConfigurationProperties("app.mybatis.secondary")
-    fun configuration(): org.apache.ibatis.session.Configuration {
-        return org.apache.ibatis.session.Configuration()
+    fun configuration(): MybatisConfig {
+        return MybatisConfig()
     }
 
     @Bean(DataSourceConstants.SECONDARY_SESSION_FACTORY)
     fun sqlSessionFactory(
         @Qualifier(DataSourceConstants.SECONDARY_HIKARI_DATASOURCE) dataSource: DataSource,
-        @Qualifier(DataSourceConstants.SECONDARY_MYBATIS_CONFIG) configuration: org.apache.ibatis.session.Configuration
+        @Qualifier(DataSourceConstants.SECONDARY_MYBATIS_CONFIG) configuration: MybatisConfig
     ): SqlSessionFactory? {
         val sessionFactoryBean = SqlSessionFactoryBean()
         sessionFactoryBean.setDataSource(dataSource)
