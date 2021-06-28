@@ -14,6 +14,7 @@ import javax.sql.DataSource
 @Configuration
 @MapperScan(
     basePackages = ["com.example.demo.infrastructure.mapper.primary"],
+    sqlSessionFactoryRef = DataSourceConstants.PRIMARY_SESSION_FACTORY,
     sqlSessionTemplateRef = DataSourceConstants.PRIMARY_SESSION_TEMPLATE
 )
 class PrimaryMybatisConfig {
