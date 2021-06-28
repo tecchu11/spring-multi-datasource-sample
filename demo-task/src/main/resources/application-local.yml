@@ -19,13 +19,13 @@ app:
       minimum-idle: 2
       pool-name: secondary-hikari
 
-    mybatis:
-      primary:
-        map-underscore-to-camel-case: true
-        default-statement-timeout: 10
-      secondary:
-        map-underscore-to-camel-case: true
-        default-statement-timeout: 3
+  mybatis:
+    primary:
+      map-underscore-to-camel-case: true
+      default-statement-timeout: 10
+    secondary:
+      map-underscore-to-camel-case: true
+      default-statement-timeout: 3
 
   async:
     core-pool-size: 10
