@@ -27,7 +27,7 @@ class PrimaryMybatisConfig {
     }
 
     @Primary
-    @Bean
+    @Bean(DataSourceConstants.PRIMARY_SESSION_FACTORY)
     fun sqlSessionFactory(
         dataSource: DataSource,
         configuration: org.apache.ibatis.session.Configuration
