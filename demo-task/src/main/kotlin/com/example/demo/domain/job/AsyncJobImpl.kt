@@ -9,9 +9,7 @@ import java.time.LocalDateTime
 private val log = KotlinLogging.logger {}
 
 @Service
-class AsyncJobImpl(
-    private val asyncRepository: AsyncRepository
-) : AsyncJob {
+class AsyncJobImpl(private val asyncRepository: AsyncRepository) : AsyncJob {
 
     @Async
     override fun asyncRegister() {

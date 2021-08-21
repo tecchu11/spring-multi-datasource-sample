@@ -12,12 +12,10 @@ class AsyncConfig(
 
     @Primary
     @Bean
-    fun threadPoolTaskExecutor(): ThreadPoolTaskExecutor {
-        val threadPoolTaskExecutor = ThreadPoolTaskExecutor()
-        threadPoolTaskExecutor.corePoolSize = asyncProperties.corePoolSize
-        threadPoolTaskExecutor.maxPoolSize = asyncProperties.maxPoolSize
-        threadPoolTaskExecutor.setQueueCapacity(asyncProperties.queueCapacity)
-        threadPoolTaskExecutor.setThreadNamePrefix(asyncProperties.threadNamePrefix)
-        return threadPoolTaskExecutor
+    fun threadPoolTaskExecutor(): ThreadPoolTaskExecutor = ThreadPoolTaskExecutor().apply {
+        corePoolSize = asyncProperties.corePoolSize
+        maxPoolSize = asyncProperties.maxPoolSize
+        setQueueCapacity(asyncProperties.queueCapacity)
+        setThreadNamePrefix(asyncProperties.threadNamePrefix)
     }
 }

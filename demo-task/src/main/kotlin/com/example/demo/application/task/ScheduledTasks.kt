@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component
 private val log = KotlinLogging.logger {  }
 
 @Component
-class ScheduledTasks(
-    private val asyncJob: AsyncJob
-) {
+class ScheduledTasks(private val asyncJob: AsyncJob) {
 
     @Scheduled(fixedRate = 1000)
     fun scheduledAsyncTask() {

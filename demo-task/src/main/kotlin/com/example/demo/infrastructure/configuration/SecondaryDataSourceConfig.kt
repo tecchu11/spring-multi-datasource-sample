@@ -11,16 +11,12 @@ import javax.sql.DataSource
 @Configuration
 class SecondaryDataSourceConfig {
 
-    @Bean(DataSourceConstants.SECONDARY_HIKARI_CONFIG)
-    @ConfigurationProperties("app.datasource.secondary")
-    fun hikariConfig(): HikariConfig {
-        return HikariConfig()
-    }
+    @Bean(SECONDARY_HIKARI_CONFIG)
+    @ConfigurationProperties(SECONDARY_CONFIG_PROPERTIES)
+    fun hikariConfig(): HikariConfig = HikariConfig()
 
-    @Bean(DataSourceConstants.SECONDARY_HIKARI_DATASOURCE)
-    fun dataSource(
-        @Qualifier(DataSourceConstants.SECONDARY_HIKARI_CONFIG) hikariConfig: HikariConfig?
-    ): DataSource {
-        return HikariDataSource(hikariConfig)
-    }
+    @Bean(SECONDARY_HIKARI_DATASOURCE)
+    fun dataSource(@Qualifier(SECONDARY_HIKARI_CONFIG) hikariConfig: HikariConfig?): DataSource =
+        HikariDataSource(hikariConfig)
+
 }

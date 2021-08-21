@@ -2,8 +2,9 @@ version: '3'
 
 services:
   primary:
-    image: mysql:5.7.16
+    image: mysql:5.7
     container_name: primary_mysql
+    platform: ard64
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       TZ: 'Asia/Tokyo'
@@ -15,8 +16,9 @@ services:
       - 4306:3306
 
   secondary:
-    image: mysql:5.7.16
+    image: mysql:5.7
     container_name: secondry_mysql
+    platform: arm64
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       TZ: 'Asia/Tokyo'

@@ -13,44 +13,35 @@ import javax.sql.DataSource
 
 @Configuration
 @MapperScan(
-    basePackages = ["com.example.demo.infrastructure.mapper.primary"],
-    sqlSessionFactoryRef = DataSourceConstants.PRIMARY_SESSION_FACTORY,
-    sqlSessionTemplateRef = DataSourceConstants.PRIMARY_SESSION_TEMPLATE
+    basePackages = [PRIMARY_MAPPER_PACKAGE],
+    sqlSessionFactoryRef = PRIMARY_SESSION_FACTORY,
+    sqlSessionTemplateRef = PRIMARY_SESSION_TEMPLATE
 )
 class PrimaryMybatisConfig {
 
     @Primary
     @Bean
-    @ConfigurationProperties("app.mybatis.primary")
-    fun configuration(): MybatisConfig {
-        return MybatisConfig()
-    }
+    @ConfigurationProperties(PRIMARY_MYBATIS_PROPERTIES)
+    fun configuration(): MybatisConfig = MybatisConfig()
 
     @Primary
-    @Bean(DataSourceConstants.PRIMARY_SESSION_FACTORY)
-    fun sqlSessionFactory(
-        dataSource: DataSource,
-        configuration: MybatisConfig
-    ): SqlSessionFactory? {
-        val factoryBean = SqlSessionFactoryBean()
-        factoryBean.setDataSource(dataSource)
-        factoryBean.setConfiguration(configuration)
-        return factoryBean.`object`
-    }
+    @Bean(PRIMARY_SESSION_FACTORY)
+    fun sqlSessionFactory(dataSource: DataSource, configuration: MybatisConfig): SqlSessionFactory? =
+        SqlSessionFactoryBean().apply {
+            setDataSource(dataSource)
+            setConfiguration(configuration)
+        }.`object`
+
 
     @Primary
-    @Bean(DataSourceConstants.PRIMARY_SESSION_TEMPLATE)
-    fun sqlSessionTemplate(
-        sqlSessionFactory: SqlSessionFactory?
-    ): SqlSessionTemplate {
-        return SqlSessionTemplate(sqlSessionFactory)
-    }
+    @Bean(PRIMARY_SESSION_TEMPLATE)
+    fun sqlSessionTemplate(sqlSessionFactory: SqlSessionFactory?): SqlSessionTemplate =
+        SqlSessionTemplate(sqlSessionFactory)
+
 
     @Primary
     @Bean
-    fun dataSourceTransactionManager(
-        dataSource: DataSource
-    ): DataSourceTransactionManager {
-        return DataSourceTransactionManager(dataSource)
-    }
+    fun dataSourceTransactionManager(dataSource: DataSource): DataSourceTransactionManager =
+        DataSourceTransactionManager(dataSource)
+
 }

@@ -13,40 +13,32 @@ import javax.sql.DataSource
 
 @Configuration
 @MapperScan(
-    basePackages = ["com.example.demo.infrastructure.mapper.secondary"],
-    sqlSessionFactoryRef = DataSourceConstants.SECONDARY_SESSION_FACTORY,
-    sqlSessionTemplateRef = DataSourceConstants.SECONDARY_SESSION_TEMPLATE
+    basePackages = [SECONDARY_MAPPER_PACKAGE],
+    sqlSessionFactoryRef = SECONDARY_SESSION_FACTORY,
+    sqlSessionTemplateRef = SECONDARY_SESSION_TEMPLATE
 )
 class SecondaryMybatisConfig {
 
-    @Bean(DataSourceConstants.SECONDARY_MYBATIS_CONFIG)
-    @ConfigurationProperties("app.mybatis.secondary")
-    fun configuration(): MybatisConfig {
-        return MybatisConfig()
-    }
+    @Bean(SECONDARY_MYBATIS_CONFIG)
+    @ConfigurationProperties(SECONDARY_MYBATIS_PROPERTIES)
+    fun configuration(): MybatisConfig = MybatisConfig()
 
-    @Bean(DataSourceConstants.SECONDARY_SESSION_FACTORY)
+    @Bean(SECONDARY_SESSION_FACTORY)
     fun sqlSessionFactory(
-        @Qualifier(DataSourceConstants.SECONDARY_HIKARI_DATASOURCE) dataSource: DataSource,
-        @Qualifier(DataSourceConstants.SECONDARY_MYBATIS_CONFIG) configuration: MybatisConfig
-    ): SqlSessionFactory? {
-        val sessionFactoryBean = SqlSessionFactoryBean()
-        sessionFactoryBean.setDataSource(dataSource)
-        sessionFactoryBean.setConfiguration(configuration)
-        return sessionFactoryBean.getObject()
-    }
+        @Qualifier(SECONDARY_HIKARI_DATASOURCE) dataSource: DataSource,
+        @Qualifier(SECONDARY_MYBATIS_CONFIG) configuration: MybatisConfig
+    ): SqlSessionFactory? =
+        SqlSessionFactoryBean().apply {
+            setDataSource(dataSource)
+            setConfiguration(configuration)
+        }.`object`
 
-    @Bean(DataSourceConstants.SECONDARY_SESSION_TEMPLATE)
-    fun sqlSessionTemplate(
-        @Qualifier(DataSourceConstants.SECONDARY_SESSION_FACTORY) sqlSessionFactory: SqlSessionFactory?
-    ): SqlSessionTemplate {
-        return SqlSessionTemplate(sqlSessionFactory)
-    }
+    @Bean(SECONDARY_SESSION_TEMPLATE)
+    fun sqlSessionTemplate(@Qualifier(SECONDARY_SESSION_FACTORY) sqlSessionFactory: SqlSessionFactory?): SqlSessionTemplate =
+        SqlSessionTemplate(sqlSessionFactory)
 
-    @Bean(DataSourceConstants.SECONDARY_TRANSACTION_MANAGER)
-    fun transactionManager(
-        @Qualifier(DataSourceConstants.SECONDARY_HIKARI_DATASOURCE) dataSource: DataSource
-    ): DataSourceTransactionManager {
-        return DataSourceTransactionManager(dataSource)
-    }
+    @Bean(SECONDARY_TRANSACTION_MANAGER)
+    fun transactionManager(@Qualifier(SECONDARY_HIKARI_DATASOURCE) dataSource: DataSource): DataSourceTransactionManager =
+        DataSourceTransactionManager(dataSource)
+
 }

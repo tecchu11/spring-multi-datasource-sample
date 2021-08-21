@@ -13,14 +13,10 @@ class PrimaryDataSourceConfig {
 
     @Primary
     @Bean
-    @ConfigurationProperties("app.datasource.primary")
-    fun hikariConfig(): HikariConfig {
-        return HikariConfig()
-    }
+    @ConfigurationProperties(PRIMARY_CONFIG_PROPERTIES)
+    fun hikariConfig(): HikariConfig = HikariConfig()
 
     @Primary
     @Bean
-    fun dataSource(hikariConfig: HikariConfig?): DataSource {
-        return HikariDataSource(hikariConfig)
-    }
+    fun dataSource(hikariConfig: HikariConfig?): DataSource = HikariDataSource(hikariConfig)
 }
